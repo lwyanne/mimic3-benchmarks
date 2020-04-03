@@ -2,7 +2,7 @@
 .idea
 miscellaneous
 notebook
-
+.vscode/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -11,8 +11,10 @@ __pycache__/
 # C extensions
 *.so
 
+data/
+
 # Distribution / packaging
-.Python
+#.Python
 env/
 build/
 develop-eggs/

@@ -1,9 +1,13 @@
 from __future__ import absolute_import
 from __future__ import print_function
+"""
+python -m mimic3benchmark.scripts.extract_subjects /home/shuying/mimic3/files/mimiciii/1.4 data/root/
 
+"""
 import argparse
 import yaml
-
+import sys
+sys.path.append('/home/shuying/survival/benchmark/mimic3-benchmarks/')
 from mimic3benchmark.mimic3csv import *
 from mimic3benchmark.preprocessing import add_hcup_ccs_2015_groups, make_phenotype_label_matrix
 from mimic3benchmark.util import dataframe_from_csv
