@@ -15,7 +15,7 @@ class Reader(object):
         else:
             listfile_path = listfile
         with open(listfile_path, "r") as lfile:
-            self._data = lfile.readlines()
+            self._data = lfile.readlines()  
         self._listfile_header = self._data[0]
         self._data = self._data[1:]
 
@@ -105,7 +105,7 @@ class InHospitalMortalityReader(Reader):
         :param period_length: Length of the period (in hours) from which the prediction is done.
         """
         Reader.__init__(self, dataset_dir, listfile)
-        self._data = [line.split(',') for line in self._data]
+        self._data = [line.split(',') for line in self._data]   #private variable----why?
         self._data = [(x, int(y)) for (x, y) in self._data]
         self._period_length = period_length
 

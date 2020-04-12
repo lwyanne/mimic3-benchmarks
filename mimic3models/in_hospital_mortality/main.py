@@ -16,21 +16,23 @@ from mimic3models import keras_utils
 from mimic3models import common_utils
 
 from keras.callbacks import ModelCheckpoint, CSVLogger
-
+#python -m mimic3models.split_train_val data/in-hospital-mortality
+#   python -um mimic3models.in_hospital_mortality.main --network mimic3models/keras_models/lstm.py --dim 16 --timestep 1.0 --depth 2 --dropout 0.3 --mode train --batch_size 8 --output_dir mimic3models/in_hospital_mortality
+#
 parser = argparse.ArgumentParser()
 common_utils.add_common_arguments(parser)
 parser.add_argument('--target_repl_coef', type=float, default=0.0)
 parser.add_argument('--data', type=str, help='Path to the data of in-hospital mortality task',
-                    default=os.path.join(os.path.dirname(__file__), '../../data/in-hospital-mortality/'))
+                    default=os.path.abspath(os.path.join(os.path.dirname(__file__), '../../data/in-hospital-mortality/')))
 parser.add_argument('--output_dir', type=str, help='Directory relative which all output files are stored',
                     default='.')
 args = parser.parse_args()
 print(args)
 
-if args.small_part:
+if args.small_part:   #TODO: 
     args.save_every = 2**30
 
-target_repl = (args.target_repl_coef > 0.0 and args.mode == 'train')
+target_repl = (args.target_repl_coef > 0.0 and args.mode == 'train') #TODO:
 
 # Build readers, discretizers, normalizers
 train_reader = InHospitalMortalityReader(dataset_dir=os.path.join(args.data, 'train'),
@@ -54,7 +56,7 @@ normalizer_state = args.normalizer_state
 if normalizer_state is None:
     normalizer_state = 'ihm_ts{}.input_str:{}.start_time:zero.normalizer'.format(args.timestep, args.imputation)
     normalizer_state = os.path.join(os.path.dirname(__file__), normalizer_state)
-normalizer.load_params(normalizer_state)
+normalizer.load_params(normalizer_state)  # ?Need to run "create_normalizer_state.py" first
 
 args_dict = dict(args._get_kwargs())
 args_dict['header'] = discretizer_header

@@ -11,7 +11,9 @@ import os
 class Discretizer:
     def __init__(self, timestep=0.8, store_masks=True, impute_strategy='zero', start_time='zero',
                  config_path=os.path.join(os.path.dirname(__file__), 'resources/discretizer_config.json')):
-
+        """ args
+        :::input_strategy:'zero', 'normal_value', 'previous', 'next'
+        """
         with open(config_path) as f:
             config = json.load(f)
             self._id_to_channel = config['id_to_channel']
@@ -37,8 +39,8 @@ class Discretizer:
         assert header[0] == "Hours"
         eps = 1e-6
 
-        N_channels = len(self._id_to_channel)
-        ts = [float(row[0]) for row in X]
+        N_channels = len(self._id_to_channel) #the number of variables
+        ts = [float(row[0]) for row in X] #time points
         for i in range(len(ts) - 1):
             assert ts[i] < ts[i+1] + eps
 
@@ -57,8 +59,8 @@ class Discretizer:
         N_bins = int(max_hours / self._timestep + 1.0 - eps)
 
         cur_len = 0
-        begin_pos = [0 for i in range(N_channels)]
-        end_pos = [0 for i in range(N_channels)]
+        begin_pos = [0 for i in range(N_channels)]  #begin position for each variable (after one-hot embedding)
+        end_pos = [0 for i in range(N_channels)]  #end position for each variable (after one-hot embedding)
         for i in range(N_channels):
             channel = self._id_to_channel[i]
             begin_pos[i] = cur_len
@@ -66,30 +68,32 @@ class Discretizer:
                 end_pos[i] = begin_pos[i] + len(self._possible_values[channel])
             else:
                 end_pos[i] = begin_pos[i] + 1
-            cur_len = end_pos[i]
+            cur_len = end_pos[i]  # dimensionality of the whole input vector
 
-        data = np.zeros(shape=(N_bins, cur_len), dtype=float)
+        data = np.zeros(shape=(N_bins, cur_len), dtype=float) 
         mask = np.zeros(shape=(N_bins, N_channels), dtype=int)
-        original_value = [["" for j in range(N_channels)] for i in range(N_bins)]
+        original_value = [["" for j in range(N_channels)] for i in range(N_bins)] # initialize a matrix to save values before embedding
         total_data = 0
         unused_data = 0
 
         def write(data, bin_id, channel, value, begin_pos):
+            """write the value of variable into data, for categorical variable, use one-hot encoding
+            """
             channel_id = self._channel_to_id[channel]
-            if self._is_categorical_channel[channel]:
+            if self._is_categorical_channel[channel]: #one-hot encoding
                 category_id = self._possible_values[channel].index(value)
                 N_values = len(self._possible_values[channel])
                 one_hot = np.zeros((N_values,))
                 one_hot[category_id] = 1
-                for pos in range(N_values):
+                for pos in range(N_values): 
                     data[bin_id, begin_pos[channel_id] + pos] = one_hot[pos]
-            else:
+            else: # continuous variable
                 data[bin_id, begin_pos[channel_id]] = float(value)
 
         for row in X:
             t = float(row[0]) - first_time
             if t > max_hours + eps:
-                continue
+                continue  #？
             bin_id = int(t / self._timestep - eps)
             assert 0 <= bin_id < N_bins
 
@@ -102,7 +106,7 @@ class Discretizer:
                 total_data += 1
                 if mask[bin_id][channel_id] == 1:
                     unused_data += 1
-                mask[bin_id][channel_id] = 1
+                mask[bin_id][channel_id] = 1  #？？？？
 
                 write(data, bin_id, channel, row[j], begin_pos)
                 original_value[bin_id][channel_id] = row[j]
@@ -113,11 +117,11 @@ class Discretizer:
             raise ValueError("impute strategy is invalid")
 
         if self._impute_strategy in ['normal_value', 'previous']:
-            prev_values = [[] for i in range(len(self._id_to_channel))]
+            prev_values = [[] for i in range(len(self._id_to_channel))] # len(self._id_to_channel) : number of variables
             for bin_id in range(N_bins):
                 for channel in self._id_to_channel:
                     channel_id = self._channel_to_id[channel]
-                    if mask[bin_id][channel_id] == 1:
+                    if mask[bin_id][channel_id] == 1:    
                         prev_values[channel_id].append(original_value[bin_id][channel_id])
                         continue
                     if self._impute_strategy == 'normal_value':
@@ -183,7 +187,7 @@ class Normalizer:
         self._stds = None
         self._fields = None
         if fields is not None:
-            self._fields = [col for col in fields]
+            self._fields = [col for col in fields] # transfer to the format of list?
 
         self._sum_x = None
         self._sum_sq_x = None
@@ -193,7 +197,7 @@ class Normalizer:
         x = np.array(x)
         self._count += x.shape[0]
         if self._sum_x is None:
-            self._sum_x = np.sum(x, axis=0)
+            self._sum_x = np.sum(x, axis=0) # sum each column
             self._sum_sq_x = np.sum(x**2, axis=0)
         else:
             self._sum_x += np.sum(x, axis=0)
@@ -221,6 +225,8 @@ class Normalizer:
             self._stds = dct['stds']
 
     def transform(self, X):
+        """ normalize each column (unit standard error, zero mean)
+        """
         if self._fields is None:
             fields = range(X.shape[1])
         else:
