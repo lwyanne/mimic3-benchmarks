@@ -94,8 +94,9 @@ class PatientHandler(object):
                     orderedTime=np.sort(df['CHARTTIME'].unique())
                     duation=len(orderedTime)
                     timeDic=dict(zip(list(orderedTime),list(range(duation))))
-                    with open(os.path.join(patientPath,'timeDict.json'), 'w') as fp:
-                        json.dump(timeDic, fp)
+                    with open(os.path.join(patientPath,'timeList.txt'), 'w') as fp:
+                        for i in orderedTime:
+                            fp.write('%s,'%i)
                     matrix=np.full((duation,len(self.variableList)),np.nan,dtype=float)
                     #Df=pd.DataFrame(index=orderedTime,columns=self.variableList,dtype=float)
                     for i in range(nrow):
@@ -109,7 +110,7 @@ class PatientHandler(object):
 
                     flag+=1
                     if flag%int((totallen/1000))==0:pbar.update(0.1)
-                    del matrix,orderedTime,timeDic,nrow,duation,df
+                    # del matrix,orderedTime,timeDic,nrow,duation,df
 
     def get_one(self,patientID):
         if type(patientID)==int: patientID=str(patientID)
