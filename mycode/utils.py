@@ -9,6 +9,7 @@ import pathlib
 import pandas as pd
 from json import JSONEncoder
 import json
+import datetime as dt
 from tqdm import tqdm
 
 n_cont=3097
@@ -46,11 +47,10 @@ class PatientHandler(object):
     """args
     ::task: 'imp' for Inhospital Mortality prediction, 'sa' for survival analysis
     """
-    def __init__(self,variableList,task='imp'):
+    def __init__(self,task='imp'):
         self.task=task
         dataPath=os.path.abspath(os.path.join(os.path.join(os.path.dirname(__file__), os.pardir),'data','root'))
         self.dataPath=dataPath
-        self.variableList=variableList
        #self.typeDict=createTypeDict(os.path.join(dataPath,'itemType.csv'))
         self.deleteNeeded=set()
 
@@ -65,7 +65,7 @@ class PatientHandler(object):
         self.valFiles=trainval[int(self.len_trainval*validrate):]
         self.testFiles=[f for f in os.listdir(self.testPath)]
 
-    def gen_data(self):
+    def gen_data(self,variableList):
         """
         Generate 'variables' for each patient in its own directory.
         The 'variables' contains items that belong to Table `labevents` and Table `chartevents`
@@ -73,6 +73,7 @@ class PatientHandler(object):
         #TODO: exclude those patients with multiple episodes, or seperate each episode
         """
         self.gen_list()
+        self.variableList=variableList
         with tqdm(total=100) as pbar:
             flag=0
             totallen=self.len_trainval+len(self.testFiles)
@@ -120,17 +121,44 @@ class PatientHandler(object):
         elif os.path.exists(test): return os.path.abspath(test)
         else: print ("patient does not exist!!!")
 
-    def read_individual(self,patient):
+    def read_individual(self,patient,normalize=True,show=False):
         """
         arg:patient: str or int of patientID
         """
         if os.path.isdir(patient)==False: patient=self.get_one(patient)
-        matrix=np.load(os.path.join(patient,'variables.npy'),allow_pickle=True)
-        if self.task == 'imp':
-            # select those timepoints before the 48th hour in ICU
-            temp=pd.read_csv(os.path.join(patient,'stays.csv'))
-            intime=temp['INTIME'][0] # Currently only consider the first ICU STAY #TODO:
-            flagtime=temp['INTIME'][0]                                          
+        matrix=np.load(patient+'/variables.npy',allow_pickle=True)
+        if normalize: 
+            try:
+                matrix = matrix - matrix.mean(axis=0)
+                matrix = matrix / np.abs(matrix).max(axis=0)
+            except ZeroDivisionError: pass
+        temp=pd.read_csv(os.path.join(patient,'stays.csv'))
+        intime=temp['INTIME'][0] # Currently only consider the first ICU STAY #TODO:
+        del temp
+        intime=dt.datetime.fromisoformat(intime)
+        with open(patient+'/timeList.txt','r') as f:
+            timeList=f.readline()
+        timeList=timeList.split(',')
+        timeList.pop()
+        timeList=[dt.datetime.fromisoformat(i)-intime for i in timeList]
+        inflag=0
+        for (i,time) in enumerate(timeList):    
+            delta=(time.total_seconds())/3600
+            if delta>48:
+                endflag=i
+                break
+            if delta>0 and inflag==0: inflag=i
+
+            del delta
+
+        s=matrix.shape
+
+        matrix48=np.zeros((endflag-inflag,s[1]+1))
+        matrix48[:,1:]=matrix[inflag:endflag,:]
+        matrix48[:,0]=[i.total_seconds()/3600 for i in timeList[inflag:endflag]]
+        
+        if show:plt.imshow(matrix48)                                       
+        return matrix48
 
     def write_delete(self):
         if not os.path.exists('delete.csv'):
@@ -143,14 +171,10 @@ class PatientHandler(object):
 
 
 
-itemDic=createItemPositionDict(os.path.join(os.path.join(os.path.dirname(__file__), os.pardir),'myvariablesList.csv'))
 #                    os.path.abspath(os.path.join(os.path.join(os.path.dirname(__file__), os.pardir),'data','root','categoricalItems.csv'))])   
 # itemlen=len(item_dic)
 # #item_dic[861]
 
 # ProcessDict()
-variableList=pd.read_csv(os.path.join(os.path.join(os.path.dirname(__file__), os.pardir),'myvariablesList.csv'),header=None).values.tolist()
-patientHandler=PatientHandler(variableList)
-patientHandler.gen_data()
-patientHandler.write_delete()
+
    
