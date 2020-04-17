@@ -1,310 +1,228 @@
 itemid,label
-224967,Pressure Ulcer Stage #4
 228409,Strength L Arm
 227467,INR
 227341,History of falling (within 3 mnths)
+195,Flow-by Sensitivity
 50815,O2 Flow
-224151,Effluent Pressure
+3459,High Pressure Relief
+52,Arterial BP Mean
+471,O2 Flow (lpm) #2
+92,CPP
 224925,Impaired Skin Odor #4
+3555,PEEP Alarm
 224056,Braden Activity
 223900,GCS - Verbal Response
+615,Resp Rate (Total)
 220179,Non Invasive Blood Pressure systolic
-228100,20 Gauge placed in the field
-227292,Arterial Line Dressing Occlusive
-228004,Citrate (ACD-A)
-224686,Tidal Volume (spontaneous)
 225094,History of slips / falls
 226544,Language
+683,Tidal Volume (Set)
+589,RCWI
+679,Temperature F (calc)
 228395,Orientation to Place
 225189,Incentive Spirometry
-225087,Visual / hearing deficit
+62,BAEDP
+627,SVRI
+1522,Calcium
 225625,Calcium non-ionized
-223849,Ventilator Mode
-224966,Pressure Ulcer Stage #3
-224701,PSV Level
-224404,ART Lumen Volume
-220050,Arterial Blood Pressure systolic
-226253,SpO2 Desat Limit
+595,RSBI (<200)
 225624,BUN
+50868,Anion Gap
 224895,Impaired Skin Depth #2
+3603,Resp Rate
 225067,Is the spokesperson the Health Care Proxy
 224563,Impaired Skin Depth #1
-223820,Headache
 226873,Inspiratory Ratio
 8527,MAWP Alarm [High]
-224422,Spont RR
+602,RVSWI
 225122,Special diet
 225074,Any fear in relationships
-224331,PCA basal rate (mL/hour)
 223770,O2 Saturation Pulseoxymetry Alarm - Low
 225103,Intravenous  / IV access prior to admission
-226534,Sodium (whole blood)
-224917,Impaired Skin Length #3
+588,RCW
 225175,See chart for initial patient assessment
 227358,PICC Line Dressing Occlusive
-224846,Impaired Skin Width #1
+3547,OG/NG Residual
 220277,O2 saturation pulseoxymetry
 227346,Mental status
-220061,Pulmonary Artery Pressure mean
-225091,Unable to assess activity / mobility
-228101,22 Gauge placed in the field
-225690,Total Bilirubin
+3599,Remote Alarm [S]
 227457,Platelet Count
-226381,Marital Status
-227349,High risk (>51) interventions
 226871,Expiratory Ratio
-220545,Hematocrit (serum)
-223814,Auditory Disturbance
+141,Cuff Pressure-Airway
 225312,ART BP mean
 227357,Dialysis Catheter Dressing Occlusive
 226537,Glucose (whole blood)
-224564,Impaired Skin Odor #1
-220645,Sodium (serum)
-8555,Arterial BP #2 [Diastolic]
+3689,Vt [Ventilator]
 8441,NBP [Diastolic]
 220066,Pulmonary Artery Pressure Alarm - Low
 220292,Minute Volume Alarm - Low
-224149,Access Pressure
-225078,Social work consult
 8505,BP PAL [Diastolic]
 225183,Current Goal
-223901,GCS - Motor Response
-223805,Nausea and Vomiting (CIWA)
+778,Arterial PaCO2
 225129,Unable to assess teaching / learning needs
 224690,Respiratory Rate (Total)
 223875,Fspn High
-224421,Spont Vt
-228137,CHG Bath
 228394,Orientation to Person
 220765,Intra Cranial Pressure
-226543,Religion
 223806,Tremor (CIWA)
-8537,"Temp/Iso/Warmer [Temperature, degrees C]"
-225076,Emotional / physical / sexual harm by partner or close relation
+470,O2 Flow (lpm)
+3663,Total Enteral/kg/day
+3294,Abdominal Girth (cm)
 225641,Differential-Lymphs
 224631,Pressure Ulcer Stage #1
 224057,Braden Mobility
+89,C.O. (fick)
 224695,Peak Insp. Pressure
 226179,No wallet / money
-224828,Arterial Base Excess
-227443,HCO3 (serum)
+827,Phosphorous(2.7-4.5)
 228299,Goal Richmond-RAS Scale
-223821,Orient/Clouding Sensory
 226118,Dialysis Catheter placed in outside facility
 224168,Parameters Checked
 223773,PA Line cm Mark
-227456,Albumin
-224685,Tidal Volume (observed)
 223873,Paw High
 226114,PA Catheter placed in outside facility
-223818,Tactile Disturbances
 51144,Bands
 226536,Chloride (whole blood)
 220059,Pulmonary Artery Pressure systolic
-224144,Blood Flow (ml/min)
-225634,CK (CPK)
 226540,Hematocrit (whole blood - calc)
 220734,PH (dipstick)
-8518,HR Alarm [High]
-223830,PH (Arterial)
-8508,BP UAC [Diastolic]
+3318,BP PAL [Mean]
 225086,Unable to assess cognitive / perceptual
 224965,Pressure Ulcer Stage #2
+860,Venous pH
 225124,Unintentional weight loss >10 lbs.
-220056,Arterial Blood Pressure Alarm - Low
-224951,Impaired Skin Width #2
 227543,CO (Arterial)
-224406,VEN Lumen Volume
 224753,Temporary Atrial Sens Setting mV
 8511,CVP Alarm [High]
-8448,PAP [Diastolic]
-220615,Creatinine
+473,O2AVI
 50953,"Iron Binding Capacity, Total"
-225070,Unable to assess psychological
-51255,Myelocytes
-227445,CK-MB
-224145,Heparin Dose (per hour)
+646,SpO2
+198,GCS Total
 8548,CVP Alarm [High]
 224918,Impaired Skin Length #4
-224665,PCA total dose
 223874,Vti High
-223872,Inspired Gas Temp.
-227342,Secondary diagnosis
 220181,Non Invasive Blood Pressure mean
-8549,HR Alarm [High]
 225106,ETOH
-8368,Arterial BP [Diastolic]
+113,CVP
 51251,Metamyelocytes
-50826,Tidal Volume
+3655,Temp Skin [C]
 224059,Braden Friction/Shear
 223762,Temperature Celsius
 224839,Temporary Pacemaker Wires Atrial
-227565,Ventilator Tank #1
-223761,Temperature Fahrenheit
-225698,TCO2 (calc) Arterial
-228337,CAM-ICU MS Change
-220051,Arterial Blood Pressure diastolic
+59,Augmented Diastole
+194,Flow-By (lpm)
+670,TCPCV Insp. Pressure
+3311,BP Alarm [Low]
 225642,Differential-Monos
-223848,Ventilator Type
+5813,ABP Alarm [Low]
 220180,Non Invasive Blood Pressure diastolic
-224927,Impaired Skin Odor #6
 228236,Insulin pump
-220602,Chloride (serum)
+3436,Flowrate (cc/min)
+3495,Lowest SaO2
 220046,Heart rate Alarm - High
-225664,Glucose finger stick
+3407,Enteral In for Calc.
+436,Low Insp. Pressure
 225112,Unable to assess pain
-226228,Gender
 224162,Resp Alarm - Low
-224684,Tidal Volume (set)
-225639,Differential-Basos
-8550,ICP Alarm [High]
+676,Temperature C
 225677,Phosphorous
-227465,Prothrombin time
-227287,O2 Flow (additional cannula)
-224688,Respiratory Rate (Set)
-220052,Arterial Blood Pressure mean
-224154,Dialysate Rate
-223791,Pain Level
-226136,16 Gauge placed in outside facility
-224058,Braden Nutrition
-225185,Skin Care
+535,Peak Insp. Pressure
+417,Inspired Gas Temp
 224663,PCA attempt
-227344,IV/Saline lock
 227343,Ambulatory aid
-8502,BP Cuff [Diastolic]
-220058,Arterial Blood Pressure Alarm - High
+3325,BP UAC [Systolic]
+775,Amylase
 223835,Inspired O2 Fraction
-220073,Central Venous Pressure  Alarm - Low
-224738,Inspiratory Time
+70,BSA - English
+3502,Mean PAW
 228396,Orientation to Time
-224329,PCA lockout (min)
-220227,Arterial O2 Saturation
+3614,Sensitivity
+678,Temperature F
+1424,CIWA Sum Total
 227293,Multi Lumen Dressing Occlusive
 224150,Filter Pressure
-220587,AST
 50811,Hemoglobin
-225667,Ionized Calcium
+3609,SaO2 Alarm [Low]
+1211,Insp Time %
+1695,Atr Sens Thresh mV
+146,Dialysate Flow ml/hr
+684,Tidal Volume (Spont)
 223811,Anxiety
-223834,O2 Flow
 225640,Differential-Eos
-224700,Total PEEP Level
-220210,Respiratory Rate
-8552,PAP Alarm [High]
-224169,MDI #1 Puff
-227066,Cerebral Perfusion Pressure
 225310,ART BP Diastolic
-8532,SaO2 Alarm [High]
-224153,Replacement Rate
-228412,Strength R Arm
 220339,PEEP set
 226531,Admission Weight (lbs.)
 220063,Pulmonary Artery Pressure Alarm - High
-225206,Multi Lumen Zero/Calibrate
-228305,ST Segment Monitoring On
-225187,Back Care
-224924,Impaired Skin Odor #3
-223819,Visual Disturbances
+3337,Breath Rate
 227345,Gait/Transferring
-227466,PTT
 226707,Height
 226113,Multi Lumen placed in outside facility
 220047,Heart Rate Alarm - Low
-224172,MDI #2 Puff
-227546,SVV (Arterial)
-225313,Bed Bath
+90,C.O.(thermodilution)
+795,Differential-Bands
+3451,Head Circ       (cm)
+517,Pacer Rate
 226730,Height (cm)
-224923,Impaired Skin Odor #2
-8554,SpO2 Alarm [High]
-220045,Heart Rate
+1707,Vent Stim Thresh mA
 223962,Temporary Pacemaker Wires Venticular
-224161,Resp Alarm - High
 224409,Pain Level Response
 224054,Braden Sensory Perception
 225612,Alkaline Phosphate
-8501,BP Alarm [High]
+3652,Temp Axillary [F]
+5817,NBP Alarm [Low]
 3732,Anion Gap   (8-20)
 225126,Dialysis patient
-220635,Magnesium
-225110,Recreational drug use
-225113,Currently experiencing pain
+742,calprevflg
+3312,BP Cuff [Mean]
 227366,16 Gauge Dressing Occlusive
-220644,ALT
+211,Heart Rate
 8547,ABP Alarm [High]
-225092,Self ADL
-220060,Pulmonary Artery Pressure diastolic
-224328,PCA dose
-224639,Daily Weight
-224916,Impaired Skin Length #2
-220739,GCS - Eye Opening
+55,Assisted Systole
+920,Admit Ht
+455,NBP [Systolic]
 225105,Unable to assess habits
-220293,Minute Volume Alarm - High
-223817,Agitation
-220621,Glucose (serum)
 228098,16 Gauge placed in the field
 224689,Respiratory Rate (spontaneous)
-226139,22 Gauge placed in outside facility
-224687,Minute Volume
-227468,Fibrinogen
 227368,20 Gauge Dressing Occlusive
-8553,Resp Alarm [High]
 225813,Baseline pain level
-226329,Blood Temperature CCO (C)
 228096,Richmond-RAS Scale
-227350,Cordis/Introducer Dressing Occlusive
 50819,PEEP
 220228,Hemoglobin
+114,CaO2
+3681,Ventilator Number
 224926,Impaired Skin Odor #5
 225117,Unable to assess nutrition / education
-226107,Arterial Line placed in outside facility
 226137,18 Gauge placed in outside facility
+581,Previous WeightF
 226457,Ultrafiltrate Output
-220072,Central Venous Pressure Alarm - High
-51007,Uric Acid
-223751,Non-Invasive Blood Pressure Alarm - High
 226169,Subglottal Suctioning
-228410,Strength L Leg
-223752,Non-Invasive Blood Pressure Alarm - Low
 223772,SvO2
-226138,20 Gauge placed in outside facility
+3688,Vt [Spontaneous]
 225668,Lactic Acid
 8517,FIO2 Alarm [High]
-223753,Riker-SAS Scale
 227369,22 Gauge Dressing Occlusive
-226180,Sexuality / reproductive problems
-224696,Plateau Pressure
-220224,Arterial O2 pressure
 228006,Post Filter Replacement Rate
-225133,Discharge needs
-225309,ART BP Systolic
-227130,Trach Care
+5814,CVP Alarm [Low]
 50905,"Cholesterol, LDL, Calculated"
-224842,Cardiac Output (CCO)
 223769,O2 Saturation Pulseoxymetry Alarm - High
-225118,Difficulty swallowing
 220632,LDH
 224332,PCA inject
-224952,Impaired Skin Width #3
 223810,Paroxysmal Sweats
-228005,PBP (Prefilter) Replacement Rate
 227688,Smoking Cessation Info Offered through BIDMC Inpatient Guide
+666,Systolic Unloading
 224191,Hourly Patient Fluid Removal
-227429,Troponin-T
 227442,Potassium (serum)
-224953,Impaired Skin Width #4
 224152,Return Pressure
-227547,SV (Arterial)
 8370,Atrial Pacemaker Threshold [Value]
-227566,Ventilator Tank #2
-224641,Alarms On
+1696,Atr Stim Thresh mA
+421,LCW
+6702,Arterial BP Mean #2
 220235,Arterial CO2 Pressure
 225184,Eye Care
 220546,WBC
 226512,Admission Weight (Kg)
+430,LVSW
 220074,Central Venous Pressure
-227073,Anion gap
-225210,Arterial Line Zero/Calibrate
-223876,Apnea Interval
-8531,Remote Alarm [D]
 8551,NBP Alarm [High]
 227351,PA Catheter Dressing Occlusive
 50908,CK-MB Index
@@ -312,7 +230,7 @@ itemid,label
 228099,18 Gauge placed in the field
 224751,Temporary Pacemaker Rate
 227464,Potassium (whole blood)
-224697,Mean Airway Pressure
+422,LCWI
 51143,Atypical Lymphocytes
 224562,Impaired Skin Length #1
 228411,Strength R Leg
@@ -320,9 +238,275 @@ itemid,label
 227367,18 Gauge Dressing Occlusive
 225188,Cough/Deep Breath
 227471,Specific Gravity (urine)
-225643,Differential-Neuts
+3556,PIP Alarm
+3345,CVP Alarm [Low]
+69,BSA
 226109,Cordis/Introducer placed in outside facility
+226115,PICC Line placed in outside facility
+87,Braden Score
+224967,Pressure Ulcer Stage #4
+601,RVSW
+5816,ICP Alarm [Low]
+619,Respiratory Rate Set
+671,TCPCV Insp. Time
+224151,Effluent Pressure
+450,Minute Volume(Obser)
+3313,BP Cuff [Systolic]
+228100,20 Gauge placed in the field
+227292,Arterial Line Dressing Occlusive
+228004,Citrate (ACD-A)
+224686,Tidal Volume (spontaneous)
+631,Sensitivity-Vent
+226,ICP
+225087,Visual / hearing deficit
+223849,Ventilator Mode
+224966,Pressure Ulcer Stage #3
+224701,PSV Level
+625,SVI
+224404,ART Lumen Volume
+220050,Arterial Blood Pressure systolic
+226253,SpO2 Desat Limit
+1704,PA line cm Mark
+786,Calcium (8.4-10.2)
+472,O2AV
+651,Spon RR (Mech.)
+223820,Headache
+224422,Spont RR
+224331,PCA basal rate (mL/hour)
+226534,Sodium (whole blood)
+224917,Impaired Skin Length #3
+184,Eye Opening
+543,Plateau Pressure
+224846,Impaired Skin Width #1
+220061,Pulmonary Artery Pressure mean
+225091,Unable to assess activity / mobility
+444,Mean Airway Pressure
+228101,22 Gauge placed in the field
+225690,Total Bilirubin
+721,Ventilator No.
+192,Filter Pressure mmHg
+226381,Marital Status
+227349,High risk (>51) interventions
+1534,Phosphorous
+220545,Hematocrit (serum)
+223814,Auditory Disturbance
+224564,Impaired Skin Odor #1
+220645,Sodium (serum)
+8555,Arterial BP #2 [Diastolic]
+3583,Previous Weight (kg)
+224149,Access Pressure
+578,Pressure Support
+614,Resp Rate (Spont)
+225078,Social work consult
+3497,MAWP Alarm [Low]
+813,Hematocrit
+223901,GCS - Motor Response
+3319,BP PAL [Systolic]
+223805,Nausea and Vomiting (CIWA)
+71,BSA - Metric
+492,PAP [Systolic]
+224421,Spont Vt
+228137,CHG Bath
+763,Daily Weight
+611,Replace Rate ml/hr
+226543,Religion
+5818,PAP Alarm [Low]
+3324,BP UAC [Mean]
+505,PEEP
+3494,Lowest Heart Rate
+3450,HR Alarm [Low]
+8537,"Temp/Iso/Warmer [Temperature, degrees C]"
+225076,Emotional / physical / sexual harm by partner or close relation
+1705,Vent Sens Thresh mV
+3400,ETT Size
+218,High Insp. Pressure
+224828,Arterial Base Excess
+833,RBC
+2921,Delta P
+762,Admit Wt
+227443,HCO3 (serum)
+223821,Orient/Clouding Sensory
+227456,Albumin
+224685,Tidal Volume (observed)
+223818,Tactile Disturbances
+224144,Blood Flow (ml/min)
+225634,CK (CPK)
+662,Stroke Volume
+8518,HR Alarm [High]
+223830,PH (Arterial)
+8508,BP UAC [Diastolic]
+220056,Arterial Blood Pressure Alarm - Low
+224951,Impaired Skin Width #2
+224406,VEN Lumen Volume
+504,PCWP
+8448,PAP [Diastolic]
+220615,Creatinine
+3581,Present Weight  (lb)
+225070,Unable to assess psychological
+51255,Myelocytes
+664,Swan SVO2
+227445,CK-MB
+224145,Heparin Dose (per hour)
+3420,FIO2
+3460,Humidity Temp [Meas]
+224665,PCA total dose
+223872,Inspired Gas Temp.
+227342,Secondary diagnosis
+1402,zzO2AVI
+8549,HR Alarm [High]
+723,Verbal Response
+8368,Arterial BP [Diastolic]
+1397,RSBI (<100)
+50826,Tidal Volume
+227565,Ventilator Tank #1
+223761,Temperature Fahrenheit
+225698,TCO2 (calc) Arterial
+228337,CAM-ICU MS Change
+220051,Arterial Blood Pressure diastolic
+223848,Ventilator Type
+224927,Impaired Skin Odor #6
+626,SVR
+682,Tidal Volume (Obser)
+220602,Chloride (serum)
+225664,Glucose finger stick
+226228,Gender
+224684,Tidal Volume (set)
+225639,Differential-Basos
+8550,ICP Alarm [High]
+227465,Prothrombin time
+227287,O2 Flow (additional cannula)
+51,Arterial BP [Systolic]
+224688,Respiratory Rate (Set)
+220052,Arterial Blood Pressure mean
+224154,Dialysate Rate
+223791,Pain Level
+226136,16 Gauge placed in outside facility
+224058,Braden Nutrition
+225185,Skin Care
+227344,IV/Saline lock
+8502,BP Cuff [Diastolic]
+220058,Arterial Blood Pressure Alarm - High
+5819,Resp Alarm [Low]
+506,PEEP Set
+456,NBP Mean
+220073,Central Venous Pressure  Alarm - Low
+224738,Inspiratory Time
+3723,Birth Weight    (kg)
+3692,Weight Change  (gms)
+1391,DO2I
+224,IABP Mean
+224329,PCA lockout (min)
+220227,Arterial O2 Saturation
+512,PVR
+220587,AST
+225667,Ionized Calcium
+223834,O2 Flow
+224700,Total PEEP Level
+220210,Respiratory Rate
+8552,PAP Alarm [High]
+3421,FIO2 Alarm [Low]
+190,FiO2 Set
+224169,MDI #1 Puff
+227066,Cerebral Perfusion Pressure
+8532,SaO2 Alarm [High]
+224153,Replacement Rate
+228412,Strength R Arm
+491,PAP Mean
+225206,Multi Lumen Zero/Calibrate
+228305,ST Segment Monitoring On
+225187,Back Care
+224924,Impaired Skin Odor #3
+223819,Visual Disturbances
+814,Hemoglobin
+5815,HR Alarm [Low]
+227466,PTT
+1401,zzO2AV
+224172,MDI #2 Puff
+75,Baseline Current/mA
+227546,SVV (Arterial)
+225313,Bed Bath
+224923,Impaired Skin Odor #2
+513,PVRI
+8554,SpO2 Alarm [High]
+220045,Heart Rate
+224161,Resp Alarm - High
+4188,Length in cm
+8501,BP Alarm [High]
+220635,Magnesium
+116,Cardiac Index
+225110,Recreational drug use
+225113,Currently experiencing pain
+3457,Hertz
+220644,ALT
+225092,Self ADL
+3422,FIO2 [Meas]
+220060,Pulmonary Artery Pressure diastolic
+224328,PCA dose
+224639,Daily Weight
+431,LVSWI
+224916,Impaired Skin Length #2
+4187,Length Calc Inches
+220739,GCS - Eye Opening
+3582,Present Weight  (oz)
+220293,Minute Volume Alarm - High
+779,Arterial PaO2
+223817,Agitation
+220621,Glucose (serum)
+226139,22 Gauge placed in outside facility
+224687,Minute Volume
+227468,Fibrinogen
+8553,Resp Alarm [High]
+3437,Flowrate (l/m)
+226329,Blood Temperature CCO (C)
+227350,Cordis/Introducer Dressing Occlusive
+219,High Resp. Rate
+677,Temperature C (calc)
+652,Spon. Vt (L) (Mech.)
+153,Diastolic Unloading
+226107,Arterial Line placed in outside facility
+5820,SpO2 Alarm [Low]
+131,Compliance (40-60ml)
+220072,Central Venous Pressure Alarm - High
+51007,Uric Acid
+223751,Non-Invasive Blood Pressure Alarm - High
+228410,Strength L Leg
+223752,Non-Invasive Blood Pressure Alarm - Low
+226138,20 Gauge placed in outside facility
+223753,Riker-SAS Scale
+580,Previous Weight
+226180,Sexuality / reproductive problems
+224696,Plateau Pressure
+220224,Arterial O2 pressure
+225133,Discharge needs
+454,Motor Response
+225309,ART BP Systolic
+227130,Trach Care
+224842,Cardiac Output (CCO)
+507,PIP
+225118,Difficulty swallowing
+3503,Mean PAW [Meas]
+224952,Impaired Skin Width #3
+228005,PBP (Prefilter) Replacement Rate
+227429,Troponin-T
+224953,Impaired Skin Width #4
+227547,SV (Arterial)
+79,Blood Flow ml/min
+624,Return Pressure mmHg
+834,SaO2
+227566,Ventilator Tank #2
+224641,Alarms On
+227073,Anion gap
+225210,Arterial Line Zero/Calibrate
+223876,Apnea Interval
+8531,Remote Alarm [D]
+6701,Arterial BP #2 [Systolic]
+1191,Glucometer
+1390,DO2
+224697,Mean Airway Pressure
+3580,Present Weight  (kg)
+1624,PreSep Catheter SVO2
+225643,Differential-Neuts
+733,Weight Change
 224055,Braden Moisture
 50903,Cholesterol Ratio (Total/HDL)
-226115,PICC Line placed in outside facility
 227632,Arctic Sun/Alsius Temp #1 C
