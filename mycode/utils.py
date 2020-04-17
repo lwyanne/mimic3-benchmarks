@@ -80,14 +80,15 @@ class PatientHandler(object):
                 for patient in filetype:
                     patientPath=os.path.join(filedir,patient)
                     if os.path.exists(os.path.join(patientPath,'variables.npy')):
-                    #     os.remove(os.path.join(patientPath,'vitals.npy'))
+                    #     os.remove(os.path.join(patientPath,'variables.npy'))
                     #     continue
-                    # else:continue
+                    # else:
+                    #     continue
                         flag+=1
                         if flag%int((totallen/1000))==0:pbar.update(0.1)
                         continue
                     df=pd.read_csv(os.path.join(patientPath,'events.csv'))
-                    print('read patient %s done'%patient)
+                    #print('read patient %s done'%patient)
                     nrow=df.shape[0]
                     
                     orderedTime=np.sort(df['CHARTTIME'].unique())
@@ -95,7 +96,7 @@ class PatientHandler(object):
                     timeDic=dict(zip(list(orderedTime),list(range(duation))))
                     with open(os.path.join(patientPath,'timeDict.json'), 'w') as fp:
                         json.dump(timeDic, fp)
-                    matrix=np.empty((duation,len(self.variableList)),dtype=float)
+                    matrix=np.full((duation,len(self.variableList)),np.nan,dtype=float)
                     #Df=pd.DataFrame(index=orderedTime,columns=self.variableList,dtype=float)
                     for i in range(nrow):
                         try:matrix[timeDic[df.iloc[i,3]],itemDic[df.iloc[i,4]]]=df.iloc[i,5] #TODO: Check the valueom
@@ -103,7 +104,7 @@ class PatientHandler(object):
                         except ValueError:
                             self.deleteNeeded.add(df.iloc[i,4])
                             continue
-                    print('matrix generated\n')
+                    #print('matrix generated\n')
                     np.save(os.path.join(patientPath,'variables.npy'),matrix)
 
                     flag+=1
@@ -128,7 +129,7 @@ class PatientHandler(object):
             # select those timepoints before the 48th hour in ICU
             temp=pd.read_csv(os.path.join(patient,'stays.csv'))
             intime=temp['INTIME'][0] # Currently only consider the first ICU STAY #TODO:
-            flagtime=temp['INTIME'][0]
+            flagtime=temp['INTIME'][0]                                          
 
     def write_delete(self):
         if not os.path.exists('delete.csv'):
