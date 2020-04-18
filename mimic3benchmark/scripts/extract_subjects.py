@@ -12,6 +12,8 @@ from mimic3benchmark.mimic3csv import *
 from mimic3benchmark.preprocessing import add_hcup_ccs_2015_groups, make_phenotype_label_matrix
 from mimic3benchmark.util import dataframe_from_csv
 
+# ------ arg parser -----
+
 parser = argparse.ArgumentParser(description='Extract per-subject data from MIMIC-III CSV files.')
 parser.add_argument('mimic3_path', type=str, help='Directory containing MIMIC-III CSV files.')
 parser.add_argument('output_path', type=str, help='Directory where per-subject data should be written.')
@@ -27,42 +29,92 @@ parser.set_defaults(verbose=True)
 parser.add_argument('--test', action='store_true', help='TEST MODE: process only 1000 subjects, 1000000 events.')
 args, _ = parser.parse_known_args()
 
+
+# -----------------------
+
+# create output dir
 try:
     os.makedirs(args.output_path)
 except:
     pass
 
+# ----- load in data ----
+
+# function defined in mimic3csv.py
 patients = read_patients_table(args.mimic3_path)
 admits = read_admissions_table(args.mimic3_path)
 stays = read_icustays_table(args.mimic3_path)
+
+# print initial state : the unredundant count 
 if args.verbose:
     print('START:\n\tICUSTAY_IDs: {}\n\tHADM_IDs: {}\n\tSUBJECT_IDs: {}'.format(stays.ICUSTAY_ID.unique().shape[0],
           stays.HADM_ID.unique().shape[0], stays.SUBJECT_ID.unique().shape[0]))
+    
+# -----------------------
+
+
+# -----remove transfered patients-----
 
 stays = remove_icustays_with_transfers(stays)
+
+# print current state : remaining number of each metrics
 if args.verbose:
     print('REMOVE ICU TRANSFERS:\n\tICUSTAY_IDs: {}\n\tHADM_IDs: {}\n\tSUBJECT_IDs: {}'.format(stays.ICUSTAY_ID.unique().shape[0],
           stays.HADM_ID.unique().shape[0], stays.SUBJECT_ID.unique().shape[0]))
 
+# concatenating info from `admits` and `patients` that has no transfer record
 stays = merge_on_subject_admission(stays, admits)
 stays = merge_on_subject(stays, patients)
+
+# ------------------------------------
+
+
+
+# ==| filter by the times entering icu |==
 stays = filter_admissions_on_nb_icustays(stays)
 if args.verbose:
     print('REMOVE MULTIPLE STAYS PER ADMIT:\n\tICUSTAY_IDs: {}\n\tHADM_IDs: {}\n\tSUBJECT_IDs: {}'.format(stays.ICUSTAY_ID.unique().shape[0],
           stays.HADM_ID.unique().shape[0], stays.SUBJECT_ID.unique().shape[0]))
 
-stays = add_age_to_icustays(stays)
-stays = add_inunit_mortality_to_icustays(stays)
-stays = add_inhospital_mortality_to_icustays(stays)
-stays = filter_icustays_on_age(stays)
+    
+    
+# --------- adding AGE , MORALITY and screening of age ---------
+
+stays = add_age_to_icustays(stays)                               # add age info
+stays = add_inunit_mortality_to_icustays(stays)                  # die in ICU ? 0: alive , 1: dead
+stays = add_inhospital_mortality_to_icustays(stays)              # die in hospital ? 0 : alive , 1: dead
+stays = filter_icustays_on_age(stays)                            # screening patients older than 18
+
+# reporting current state 
+
 if args.verbose:
     print('REMOVE PATIENTS AGE < 18:\n\tICUSTAY_IDs: {}\n\tHADM_IDs: {}\n\tSUBJECT_IDs: {}'.format(stays.ICUSTAY_ID.unique().shape[0],
           stays.HADM_ID.unique().shape[0], stays.SUBJECT_ID.unique().shape[0]))
 
+# --------------------------------------------------------------
+
+
+
+
+
+# -----------------------\               /--------------------------
+# ======================== SAVE to new csv =========================
+# -----------------------/               \--------------------------
+
 stays.to_csv(os.path.join(args.output_path, 'all_stays.csv'), index=False)
+
+# =================================================================
+
+
+
+# read diagnose data passed from D_ICD_DIAGNOSES.csv`  and  `DIAGNOSES_ICD.csv` 
 diagnoses = read_icd_diagnoses_table(args.mimic3_path)
+# screen patients
 diagnoses = filter_diagnoses_on_stays(diagnoses, stays)
+
 diagnoses.to_csv(os.path.join(args.output_path, 'all_diagnoses.csv'), index=False)
+
+# summarize the number of icd codes (disease) and count the corresponding patients
 count_icd_codes(diagnoses, output_path=os.path.join(args.output_path, 'diagnosis_counts.csv'))
 
 phenotypes = add_hcup_ccs_2015_groups(diagnoses, yaml.load(open(args.phenotype_definitions, 'r')))
