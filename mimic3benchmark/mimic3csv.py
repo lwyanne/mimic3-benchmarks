@@ -12,6 +12,15 @@ from mimic3benchmark.util import dataframe_from_csv
 
 
 def read_patients_table(mimic3_path):
+    """
+    from `mimi3_path` read  `PATENTS.csv`  as DataFrame and only return
+    
+        'SUBJECT_ID', 'GENDER', 'DOB', 'DOD'
+         
+         these 4 columns 
+         
+         `date` convert to dtype `datetime`
+    """
     pats = dataframe_from_csv(os.path.join(mimic3_path, 'PATIENTS.csv'))
     pats = pats[['SUBJECT_ID', 'GENDER', 'DOB', 'DOD']]
     pats.DOB = pd.to_datetime(pats.DOB)
@@ -20,6 +29,15 @@ def read_patients_table(mimic3_path):
 
 
 def read_admissions_table(mimic3_path):
+    """
+    from `mimi3_path` read  `ADMISSIONS.csv`  as DataFrame and only return
+    
+        'SUBJECT_ID', 'HADM_ID', 'ADMITTIME', 'DISCHTIME', 'DEATHTIME', 'ETHNICITY', 'DIAGNOSIS'
+         
+         these 7 columns 
+         
+         `date` convert to dtype `datetime`
+    """
     admits = dataframe_from_csv(os.path.join(mimic3_path, 'ADMISSIONS.csv'))
     admits = admits[['SUBJECT_ID', 'HADM_ID', 'ADMITTIME', 'DISCHTIME', 'DEATHTIME', 'ETHNICITY', 'DIAGNOSIS']]
     admits.ADMITTIME = pd.to_datetime(admits.ADMITTIME)
@@ -29,6 +47,14 @@ def read_admissions_table(mimic3_path):
 
 
 def read_icustays_table(mimic3_path):
+    """
+    from `mimi3_path` read  `ICUSTAYS.csv`  as DataFrame and only return
+    
+        ['SUBJECT_ID', 'HADM_ID', 'ICUSTAY_ID', 'DBSOURCE', 'FIRST_CAREUNIT','LAST_CAREUNIT', 'FIRST_WARDID', 'LAST_WARDID','INTIME', 'OUTTIME','LOS']
+         
+         `date` convert to dtype `datetime`
+    """
+    
     stays = dataframe_from_csv(os.path.join(mimic3_path, 'ICUSTAYS.csv'))
     stays.INTIME = pd.to_datetime(stays.INTIME)
     stays.OUTTIME = pd.to_datetime(stays.OUTTIME)
@@ -36,10 +62,21 @@ def read_icustays_table(mimic3_path):
 
 
 def read_icd_diagnoses_table(mimic3_path):
+    """
+    concatenate 2 csv into 1 DataFrame
+    
+        `D_ICD_DIAGNOSES.csv`  : 'ICD9_CODE', 'SHORT_TITLE', 'LONG_TITLE'
+                & 
+        `DIAGNOSES_ICD.csv`    : 'SUBJECT_ID', 'HADM_ID', 'SEQ_NUM'
+        
+    """
     codes = dataframe_from_csv(os.path.join(mimic3_path, 'D_ICD_DIAGNOSES.csv'))
     codes = codes[['ICD9_CODE', 'SHORT_TITLE', 'LONG_TITLE']]
+    
     diagnoses = dataframe_from_csv(os.path.join(mimic3_path, 'DIAGNOSES_ICD.csv'))
+    # merging 2 DF
     diagnoses = diagnoses.merge(codes, how='inner', left_on='ICD9_CODE', right_on='ICD9_CODE')
+    # dtype : int
     diagnoses[['SUBJECT_ID', 'HADM_ID', 'SEQ_NUM']] = diagnoses[['SUBJECT_ID', 'HADM_ID', 'SEQ_NUM']].astype(int)
     return diagnoses
 
@@ -55,7 +92,7 @@ def read_events_table_by_row(mimic3_path, table):
 
 def count_icd_codes(diagnoses, output_path=None):
     codes = diagnoses[['ICD9_CODE', 'SHORT_TITLE', 'LONG_TITLE']].drop_duplicates().set_index('ICD9_CODE')
-    codes['COUNT'] = diagnoses.groupby('ICD9_CODE')['ICUSTAY_ID'].count()
+    codes['COUNT'] = diagnoses.groupby('ICD9_CODE')['ICUSTAY_ID'].count()  # see the proportion of victim for each diease
     codes.COUNT = codes.COUNT.fillna(0).astype(int)
     codes = codes[codes.COUNT > 0]
     if output_path:
@@ -64,53 +101,106 @@ def count_icd_codes(diagnoses, output_path=None):
 
 
 def remove_icustays_with_transfers(stays):
+    """
+    To remove patients with transfer, 
+    from the original stay DataFrame, remove patients whose :
+        
+            first wardid != last wardid
+            first careunit != last careunit
+            
+        And drop the redundant columns for remaining patients have identical wardid and careunit across the time
+    """
     stays = stays[(stays.FIRST_WARDID == stays.LAST_WARDID) & (stays.FIRST_CAREUNIT == stays.LAST_CAREUNIT)]
     return stays[['SUBJECT_ID', 'HADM_ID', 'ICUSTAY_ID', 'LAST_CAREUNIT', 'DBSOURCE', 'INTIME', 'OUTTIME', 'LOS']]
 
 
 def merge_on_subject(table1, table2):
+    """
+        join 2 DataFrame by key : `SUBJECT_ID`
+    """
     return table1.merge(table2, how='inner', left_on=['SUBJECT_ID'], right_on=['SUBJECT_ID'])
 
 
 def merge_on_subject_admission(table1, table2):
+    """
+        join 2 DataFrame by keys : ['SUBJECT_ID', 'HADM_ID']
+    """
     return table1.merge(table2, how='inner', left_on=['SUBJECT_ID', 'HADM_ID'], right_on=['SUBJECT_ID', 'HADM_ID'])
 
 
 def add_age_to_icustays(stays):
-    stays['AGE'] = stays.apply(lambda e: (e['INTIME'] - e['DOB']).days/365, axis=1)
-    #stays['AGE'] = (stays.INTIME - stays.DOB).apply(lambda s: s / np.timedelta64(1, 's')) / 60./60/24/365
+    """
+        Adding age when admission
+        
+            missing info will assign will 90 
+    """
+    ns_ls = stays['INTIME'].values - stays['DOB'].values
+    stays['AGE'] = np.divide(ns_ls,np.timedelta64(1, 's')) / 60./60/24/365
     stays.loc[stays.AGE < 0, 'AGE'] = 90
     return stays
 
+def add_inunit_mortality_to_icustays(stays):
+    """
+        Adding columns labeling whether patient die in ICU : 
+            
+            1 : dead , 0 : alive
+    """
+    # died in icu
+    # judge by `DOD`
+    mortality = stays.DOD.notnull() & ((stays.INTIME <= stays.DOD) & (stays.OUTTIME >= stays.DOD))   
+    
+    # death info may also stored in `DEATHTIME`
+    mortality = mortality | (stays.DEATHTIME.notnull() & ((stays.INTIME <= stays.DEATHTIME) & (stays.OUTTIME >= stays.DEATHTIME)))
+    
+    stays['MORTALITY_INUNIT'] = mortality.astype(int)
+    return stays
 
 def add_inhospital_mortality_to_icustays(stays):
+    """
+        Adding columns labeling whether patient die in hospital : 
+            
+            1 : dead , 0 : alive
+    """
+    
+    # died in hospital
+    # judage by 'ADMIT TIME'
     mortality = stays.DOD.notnull() & ((stays.ADMITTIME <= stays.DOD) & (stays.DISCHTIME >= stays.DOD))
+    # another one
     mortality = mortality | (stays.DEATHTIME.notnull() & ((stays.ADMITTIME <= stays.DEATHTIME) & (stays.DISCHTIME >= stays.DEATHTIME)))
     stays['MORTALITY'] = mortality.astype(int)
     stays['MORTALITY_INHOSPITAL'] = stays['MORTALITY']
     return stays
 
 
-def add_inunit_mortality_to_icustays(stays):
-    mortality = stays.DOD.notnull() & ((stays.INTIME <= stays.DOD) & (stays.OUTTIME >= stays.DOD))
-    mortality = mortality | (stays.DEATHTIME.notnull() & ((stays.INTIME <= stays.DEATHTIME) & (stays.OUTTIME >= stays.DEATHTIME)))
-    stays['MORTALITY_INUNIT'] = mortality.astype(int)
-    return stays
-
-
 def filter_admissions_on_nb_icustays(stays, min_nb_stays=1, max_nb_stays=1):
+    """
+        removing patients entering ICU less than `min_nb_stays` and more than `max_nb_stays`
+    """
+    # count the number of ICU id a single patient has
     to_keep = stays.groupby('HADM_ID').count()[['ICUSTAY_ID']].reset_index()
+    
+    # filter by setted boundary
     to_keep = to_keep[(to_keep.ICUSTAY_ID >= min_nb_stays) & (to_keep.ICUSTAY_ID <= max_nb_stays)][['HADM_ID']]
+    
+    # merge
     stays = stays.merge(to_keep, how='inner', left_on='HADM_ID', right_on='HADM_ID')
     return stays
 
 
 def filter_icustays_on_age(stays, min_age=18, max_age=np.inf):
+    """
+        filtering patients by age , should run after `add_age_to_icustays`
+            
+            here only patients older than 18 are considered
+    """
     stays = stays[(stays.AGE >= min_age) & (stays.AGE <= max_age)]
     return stays
 
 
 def filter_diagnoses_on_stays(diagnoses, stays):
+    """
+        keep the diagnoses record matching the screened patients
+    """
     return diagnoses.merge(stays[['SUBJECT_ID', 'HADM_ID', 'ICUSTAY_ID']].drop_duplicates(), how='inner',
                            left_on=['SUBJECT_ID', 'HADM_ID'], right_on=['SUBJECT_ID', 'HADM_ID'])
 
